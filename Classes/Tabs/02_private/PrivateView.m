@@ -81,7 +81,8 @@
 {
 	[super viewWillDisappear:animated];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[self searchBarCancelled];
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
 }
 
 #pragma mark - Backend methods
