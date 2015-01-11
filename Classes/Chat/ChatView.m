@@ -115,11 +115,17 @@
 		{
 			if (error == nil)
 			{
+				self.automaticallyScrollsToMostRecentMessage = NO;
 				for (PFObject *object in [objects reverseObjectEnumerator])
 				{
 					[self addMessage:object];
 				}
-				if ([objects count] != 0) [self finishReceivingMessage];
+				if ([objects count] != 0)
+				{
+					[self finishReceivingMessage];
+					[self scrollToBottomAnimated:NO];
+				}
+				self.automaticallyScrollsToMostRecentMessage = YES;
 			}
 			else [ProgressHUD showError:@"Network error."];
 			isLoading = NO;
