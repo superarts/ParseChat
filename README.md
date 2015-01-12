@@ -14,15 +14,9 @@ The app is using Parse as backend which is basically free. (Free plan: 20 GB Fil
 
 Really easy to setup, just copy/paste the code and use your own chatrooms.
 
-## WHAT'S NEW IN 3.2
+## WHAT'S NEW IN 3.5
 
-- Picture media support added
-
-## WHAT'S NEW IN 3.1
-
-- Push Notification implemented
-- JSQMessagesViewController updated
-- JSQSystemSoundPlayer updated
+- Address Book access + invite function
 
 ## FEATURES
 

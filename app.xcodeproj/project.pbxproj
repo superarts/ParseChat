@@ -68,6 +68,8 @@
 		292719E619F284AC009C308B /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 2927195419F284AC009C308B /* UIRefreshControl+AFNetworking.m */; };
 		292719E719F284AC009C308B /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 2927195619F284AC009C308B /* UIWebView+AFNetworking.m */; };
 		29271A2D19F284AC009C308B /* JSQSystemSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 292719D219F284AC009C308B /* JSQSystemSoundPlayer.m */; };
+		292ED7F81A62FCD3006BCF02 /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 292ED7F61A62FCD3006BCF02 /* SearchView.m */; };
+		292ED7F91A62FCD3006BCF02 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 292ED7F71A62FCD3006BCF02 /* SearchView.xib */; };
 		296DD5E81A1F557900AB9F8C /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 296DD5E51A1F557900AB9F8C /* ProgressHUD.bundle */; };
 		296DD5E91A1F557900AB9F8C /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 296DD5E71A1F557900AB9F8C /* ProgressHUD.m */; };
 		2999F3A51A3C3E9B00147194 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2999F37B1A3C3E9B00147194 /* NavigationController.m */; };
@@ -258,6 +260,9 @@
 		2927195619F284AC009C308B /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		292719D119F284AC009C308B /* JSQSystemSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQSystemSoundPlayer.h; sourceTree = "<group>"; };
 		292719D219F284AC009C308B /* JSQSystemSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQSystemSoundPlayer.m; sourceTree = "<group>"; };
+		292ED7F51A62FCD3006BCF02 /* SearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
+		292ED7F61A62FCD3006BCF02 /* SearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
+		292ED7F71A62FCD3006BCF02 /* SearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
 		296DD5E51A1F557900AB9F8C /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
 		296DD5E61A1F557900AB9F8C /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		296DD5E71A1F557900AB9F8C /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
@@ -665,6 +670,9 @@
 				2999F3841A3C3E9B00147194 /* PrivateView.h */,
 				2999F3851A3C3E9B00147194 /* PrivateView.m */,
 				2999F3861A3C3E9B00147194 /* PrivateView.xib */,
+				292ED7F51A62FCD3006BCF02 /* SearchView.h */,
+				292ED7F61A62FCD3006BCF02 /* SearchView.m */,
+				292ED7F71A62FCD3006BCF02 /* SearchView.xib */,
 			);
 			path = 02_private;
 			sourceTree = "<group>";
@@ -898,6 +906,7 @@
 				2999F3AD1A3C3E9B00147194 /* MessagesView.xib in Resources */,
 				29B6DDD91A3C3D0B00D38CD9 /* tab_group@2x.png in Resources */,
 				292028551A556DA100639C7F /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
+				292ED7F91A62FCD3006BCF02 /* SearchView.xib in Resources */,
 				2999F3B11A3C3E9B00147194 /* LoginView.xib in Resources */,
 				2999F3A91A3C3E9B00147194 /* PrivateView.xib in Resources */,
 				2999F3AB1A3C3E9B00147194 /* MessagesCell.xib in Resources */,
@@ -923,6 +932,7 @@
 				292719DD19F284AC009C308B /* AFURLRequestSerialization.m in Sources */,
 				292028321A556DA100639C7F /* JSQSystemSoundPlayer+JSQMessages.m in Sources */,
 				292719DC19F284AC009C308B /* AFURLConnectionOperation.m in Sources */,
+				292ED7F81A62FCD3006BCF02 /* SearchView.m in Sources */,
 				2999F3B91A3C3E9B00147194 /* utilities.m in Sources */,
 				292719E219F284AC009C308B /* UIAlertView+AFNetworking.m in Sources */,
 				2920284F1A556DA100639C7F /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,

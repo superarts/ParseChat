@@ -9,12 +9,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import <UIKit/UIKit.h>
-#import <MessageUI/MFMailComposeViewController.h>
-#import <MessageUI/MFMessageComposeViewController.h>
-
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-@interface PrivateView : UITableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+@interface SearchView : UITableViewController <UISearchBarDelegate>
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
 @end

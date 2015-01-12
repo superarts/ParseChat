@@ -16,73 +16,86 @@
 #import "messages.h"
 #import "utilities.h"
 
-#import "GroupView.h"
+#import "SearchView.h"
 #import "ChatView.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-@interface GroupView()
+@interface SearchView()
 {
-	NSMutableArray *chatrooms;
+	NSMutableArray *users;
 }
+
+@property (strong, nonatomic) IBOutlet UIView *viewHeader;
+@property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+
 @end
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
-@implementation GroupView
+@implementation SearchView
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self)
-	{
-		[self.tabBarItem setImage:[UIImage imageNamed:@"tab_group"]];
-		self.tabBarItem.title = @"Group";
-	}
-	return self;
-}
+@synthesize viewHeader, searchBar;
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)viewDidLoad
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Group";
+	self.title = @"Search";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self
-																			 action:@selector(actionNew)];
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self
+																			action:@selector(actionCancel)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.tableView.tableFooterView = [[UIView alloc] init];
+	self.tableView.tableHeaderView = viewHeader;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	chatrooms = [[NSMutableArray alloc] init];
+	users = [[NSMutableArray alloc] init];
+	//---------------------------------------------------------------------------------------------------------------------------------------------
+	[self loadUsers];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	[super viewDidAppear:animated];
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	if ([PFUser currentUser] != nil)
-	{
-		[self loadChatRooms];
-	}
-	else LoginUser(self);
+	[super viewWillAppear:animated];
 }
 
-#pragma mark - Backend actions
+#pragma mark - Backend methods
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)loadChatRooms
+- (void)loadUsers
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	PFQuery *query = [PFQuery queryWithClassName:PF_CHATROOMS_CLASS_NAME];
+	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
+	[query whereKey:PF_USER_OBJECTID notEqualTo:[PFUser currentUser].objectId];
+	[query orderByAscending:PF_USER_FULLNAME];
+	[query setLimit:1000];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 	{
 		if (error == nil)
 		{
-			[chatrooms removeAllObjects];
-			[chatrooms addObjectsFromArray:objects];
+			[users removeAllObjects];
+			[users addObjectsFromArray:objects];
+			[self.tableView reloadData];
+		}
+		else [ProgressHUD showError:@"Network error."];
+	}];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchUsers:(NSString *)search_lower
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	PFQuery *query = [PFQuery queryWithClassName:PF_USER_CLASS_NAME];
+	[query whereKey:PF_USER_OBJECTID notEqualTo:[PFUser currentUser].objectId];
+	[query whereKey:PF_USER_FULLNAME_LOWER containsString:search_lower];
+	[query orderByAscending:PF_USER_FULLNAME];
+	[query setLimit:1000];
+	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+	{
+		if (error == nil)
+		{
+			[users removeAllObjects];
+			[users addObjectsFromArray:objects];
 			[self.tableView reloadData];
 		}
 		else [ProgressHUD showError:@"Network error."];
@@ -92,38 +105,10 @@
 #pragma mark - User actions
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)actionNew
+- (void)actionCancel
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter a name for your group" message:nil delegate:self
-										  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-	[alert show];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	if (buttonIndex != alertView.cancelButtonIndex)
-	{
-		UITextField *textField = [alertView textFieldAtIndex:0];
-		if ([textField.text length] != 0)
-		{
-			PFObject *object = [PFObject objectWithClassName:PF_CHATROOMS_CLASS_NAME];
-			object[PF_CHATROOMS_NAME] = textField.text;
-			[object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
-			{
-				if (error == nil)
-				{
-					[self loadChatRooms];
-				}
-				else [ProgressHUD showError:@"Network error."];
-			}];
-		}
-	}
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -139,14 +124,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	return [chatrooms count];
-}
-
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//-------------------------------------------------------------------------------------------------------------------------------------------------
-{
-	return 50;
+	return [users count];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -156,25 +134,8 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
 	if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
 
-	PFObject *chatroom = chatrooms[indexPath.row];
-	cell.textLabel.text = chatroom[PF_CHATROOMS_NAME];
-	if (cell.detailTextLabel.text == nil) cell.detailTextLabel.text = @" ";
-	cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-
-	PFQuery *query = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
-	[query whereKey:PF_CHAT_ROOMID equalTo:chatroom.objectId];
-	[query orderByDescending:PF_CHAT_CREATEDAT];
-	[query setLimit:1000];
-	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
-	{
-		if ([objects count] != 0)
-		{
-			PFObject *chat = [objects firstObject];
-			NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:chat.createdAt];
-			cell.detailTextLabel.text = [NSString stringWithFormat:@"%d messages (%@)", (int) [objects count], TimeElapsed(seconds)];
-		}
-		else cell.detailTextLabel.text = @"No message";
-	}];
+	PFUser *user = users[indexPath.row];
+	cell.textLabel.text = user[PF_USER_FULLNAME];
 
 	return cell;
 }
@@ -187,14 +148,63 @@
 {
 	[tableView deselectRowAtIndexPath:indexPath animated:YES];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	PFObject *chatroom = chatrooms[indexPath.row];
-	NSString *roomId = chatroom.objectId;
-	//---------------------------------------------------------------------------------------------------------------------------------------------
-	CreateMessageItem([PFUser currentUser], roomId, chatroom[PF_CHATROOMS_NAME]);
+	PFUser *user1 = [PFUser currentUser];
+	PFUser *user2 = users[indexPath.row];
+	NSString *roomId = StartPrivateChat(user1, user2);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	ChatView *chatView = [[ChatView alloc] initWith:roomId];
-	chatView.hidesBottomBarWhenPushed = YES;
 	[self.navigationController pushViewController:chatView animated:YES];
+}
+
+#pragma mark - UISearchBarDelegate
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	if ([searchText length] > 0)
+	{
+		[self searchUsers:[searchText lowercaseString]];
+	}
+	else [self loadUsers];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar_
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[searchBar_ setShowsCancelButton:YES animated:YES];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar_
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[searchBar_ setShowsCancelButton:NO animated:YES];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[self searchBarCancelled];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar_
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	[searchBar_ resignFirstResponder];
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)searchBarCancelled
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
+
+	[self loadUsers];
 }
 
 @end

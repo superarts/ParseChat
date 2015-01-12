@@ -16,6 +16,9 @@
 #define		DEFAULT_TAB							0
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+#define		MESSAGE_INVITE						@"Check out NotificationChat. You can download here: https://github.com/relatedcode/NotificationChat"
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
 #define		PF_INSTALLATION_CLASS_NAME			@"_Installation"		//	Class name
 #define		PF_INSTALLATION_OBJECTID			@"objectId"				//	String
 #define		PF_INSTALLATION_USER				@"user"					//	Pointer to User Class
