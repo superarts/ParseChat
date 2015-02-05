@@ -1,4 +1,6 @@
-[![RelatedCode](http://relatedcode.com/github/header8.png)](http://relatedcode.com)
+This project is based on NotificationChat. Instead of a chat app, it will be branding as a forum / discussion app, and I'll probably work on a real forum project based on Parse later.
+
+---
 
 ## OVERVIEW
 
