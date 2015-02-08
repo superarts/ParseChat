@@ -1,6 +1,11 @@
 <?php
 
-require('/Users/leo/prj/android/script/lib/lykits.php');
+require('/Users/leo/prj/script/lib/lykits.php');
+
+use Parse\ParseClient;
+use Parse\ParseObject;
+use Parse\ParseQuery;
+use Parse\ParseUser;
 
 $array = file('list.txt');
 //	print_r($array);
@@ -24,7 +29,7 @@ for ($i = 0; $i < count($array) / 5; $i++)
 
 //	parse
 
-$index = 10000;
+$index = 1;
 
 $article = array();
 $article['title']	= substr($array[$index * 5 + 0], 0, -1);
@@ -39,7 +44,22 @@ $doc = file_to_doc($filename);
 echo "----\n";
 //print_r(doc_to_array($doc));
 $array = doc_to_array($doc);
-//print_array($array, 'root');
+print_array($array, 'root');
+
+$post = $article;
+$path = "root-html-1-body-div-0-div-0-section-article-div-div-0-div-0-a-0-_value";
+$post['author_name'] = array_get_path($array, $path);
+$path = "root-html-1-body-div-0-div-0-section-article-div-div-0-div-0-a-0-@attributes-href";
+$post['author_url'] = array_get_path($array, $path);
+$path = "root-html-1-body-div-0-div-0-section-article-div-div-0-div-1-span-0";
+$post['date'] = array_get_path($array, $path);
+$post['reply'] = substr($article['reply'], 0, -6);
+$path = "root-html-1-body-div-0-div-0-section-article-div-div-0-figure-a-img-@attributes-src";
+$post['author_avatar'] = array_get_path($array, $path);
+print_r($post);
+
+$post_text = get_content_text($doc);
+$post_html = get_content_html($doc);
 
 echo "\n----\n";
 echo get_content_text($doc);
@@ -70,6 +90,27 @@ foreach ($items as $comment)
 	print_r($comment);
 }
 
+parse_save_user($post);
+echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
+$object_room = ParseObject::create("ChatRooms");
+$object_room->set("name", $post['title']);
+$object_room->set("user", ParseUser::getCurrentUser());
+$object_room = parse_save_object($object_room, 'title');
+if ($object_room)
+{
+	$object_chat = ParseObject::create("Chat");
+	echo $object_room->getObjectId()."\n";
+	$object_chat->set('roomId', $object_room->getObjectId());
+	$object_chat->set('text', $post_text);
+	//echo $object_chat->get('text');
+	//$object_chat->set('html', $post_html);
+	$object_chat->set('user', ParseUser::getCurrentUser());
+	$object_chat->set('url',$post['url']);
+	$object_chat->set('date',$post['date']);
+	$object_chat->set('reply_count',$post['reply']);
+	$object_chat->save();
+}
+
 /*
 $replies = $doc->getElementsByTagName('div');
 //print_r($replies);
@@ -82,6 +123,19 @@ $comments = $doc->getElementById('cmtContent');
 if ($comments == null)
 	echo "wow";
 print_r($comments);
+ */
+
+/*
+$object = ParseObject::create("TestObject");
+$object->set("elephant", "go");
+$object->set("today", new DateTime());
+$object->setArray("mylist", [1, 2, 3]);
+$object->setAssociativeArray(
+  "languageTypes", array("php" => "awesome", "ruby" => "wtf")
+);
+parse_save_object($object, 'elephant');
+parse_save_user('test002');
+echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
  */
 
 //echo str_count_duplicate('xxxxx xxxxx xxxxxxxx ', 'x');
@@ -160,6 +214,80 @@ function get_comment_text($doc, $id)
 	$text = str_remove_duplicate($text, "\n", 1);
 	$text = trim($text);
 	return $text;
+}
+
+/**
+ * return the number of objects with the same key/value
+ */
+function parse_count_object($object, $key)
+{
+	$value = $object->get($key);
+	$class = $object->getClassName();
+
+	$query = new ParseQuery($class);
+	$query->equalTo($key, $value);
+	$count = $query->count();
+	//echo "count of $key: $count\n";
+	return $count;
+}
+
+/**
+ * return the first of objects with the same key/value
+ */
+function parse_first_object($object, $key)
+{
+	$value = $object->get($key);
+	$class = $object->getClassName();
+
+	$query = new ParseQuery($class);
+	$query->equalTo($key, $value);
+	//$query->limit(1);
+	return $query->first();
+}
+
+/**
+ * save object only if it's not unique
+ */
+function parse_save_object($object, $key)
+{
+	if (parse_count_object($object, $key) == 0)
+	{
+		$object->save();
+		echo "saved: ".$object->getObjectId()."\n";
+		return $object;
+	}
+	//	else echo "found duplicated object\n";
+	return null;
+}
+
+/**
+ * sign up user only if the username is unique, otherwise sign him in
+ */
+function parse_save_user($post)
+{
+	$username = $post['author_name'];
+	$hash = hash('ripemd160', $username);
+	$password = "contrasenia";
+	$user = new ParseUser();
+	$user->setUsername($username);
+	$user->setEmail("$hash@gmail.com");
+	$user->set('url', $post['url']);
+	$user->set('image_url', $post['author_avatar']);
+	$user->setPassword($password);
+	if (parse_count_object($user, 'username') == 0)
+	{
+		try {
+			$user->signUp();
+		} catch (ParseException $ex) {
+			echo $ex->getMessage()."\n";
+			die;
+		}
+	}
+	else
+	{
+		//echo "found duplicated user\n";
+		ParseUser::logIn($username, $password);
+	}
 }
 
 ?>

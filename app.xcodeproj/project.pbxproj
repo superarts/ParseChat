@@ -120,6 +120,8 @@
 		29EB240E19E9292500D7AA97 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB240D19E9292500D7AA97 /* AppDelegate.m */; };
 		29EB241619E9292500D7AA97 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29EB241519E9292500D7AA97 /* Images.xcassets */; };
 		29EB241919E9292500D7AA97 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EB241719E9292500D7AA97 /* LaunchScreen.xib */; };
+		B39F66171A877EEA004A7D07 /* key.txt in Resources */ = {isa = PBXBuildFile; fileRef = B39F66151A877EEA004A7D07 /* key.txt */; };
+		B39F661A1A878015004A7D07 /* aid.txt in Resources */ = {isa = PBXBuildFile; fileRef = B39F66191A878015004A7D07 /* aid.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -332,6 +334,8 @@
 		29EB241519E9292500D7AA97 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		29EB241819E9292500D7AA97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		29EB254F19E92ACD00D7AA97 /* AppConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
+		B39F66151A877EEA004A7D07 /* key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = key.txt; path = ../../../../Dropbox/prj/SexMaster/key.txt; sourceTree = "<group>"; };
+		B39F66191A878015004A7D07 /* aid.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = aid.txt; path = ../../../../Dropbox/prj/SexMaster/aid.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -789,6 +793,8 @@
 		29EB240819E9292500D7AA97 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B39F66191A878015004A7D07 /* aid.txt */,
+				B39F66151A877EEA004A7D07 /* key.txt */,
 				29EB240919E9292500D7AA97 /* Info.plist */,
 				29EB240A19E9292500D7AA97 /* main.m */,
 			);
@@ -892,6 +898,7 @@
 				29B6DDDC1A3C3D0B00D38CD9 /* tab_profile@2x.png in Resources */,
 				2999F3B31A3C3E9B00147194 /* RegisterView.xib in Resources */,
 				2999F3AF1A3C3E9B00147194 /* ProfileView.xib in Resources */,
+				B39F661A1A878015004A7D07 /* aid.txt in Resources */,
 				292028301A556DA100639C7F /* JSQMessagesAssets.bundle in Resources */,
 				296DD5E81A1F557900AB9F8C /* ProgressHUD.bundle in Resources */,
 				29B6DDD81A3C3D0B00D38CD9 /* profile_blank@2x.png in Resources */,
@@ -901,6 +908,7 @@
 				2920284E1A556DA100639C7F /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				2999F3B51A3C3E9B00147194 /* WelcomeView.xib in Resources */,
 				2920285A1A556DA100639C7F /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				B39F66171A877EEA004A7D07 /* key.txt in Resources */,
 				292028581A556DA100639C7F /* JSQMessagesToolbarContentView.xib in Resources */,
 				29EB241919E9292500D7AA97 /* LaunchScreen.xib in Resources */,
 				29B6DDDB1A3C3D0B00D38CD9 /* tab_private@2x.png in Resources */,
