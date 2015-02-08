@@ -47,22 +47,22 @@ NSString* TimeElapsed(NSTimeInterval seconds)
 	NSString *elapsed;
 	if (seconds < 60)
 	{
-		elapsed = @"Just now";
+		elapsed = @"刚刚";
 	}
 	else if (seconds < 60 * 60)
 	{
 		int minutes = (int) (seconds / 60);
-		elapsed = [NSString stringWithFormat:@"%d %@", minutes, (minutes > 1) ? @"mins" : @"min"];
+		elapsed = [NSString stringWithFormat:@"%d %@", minutes, (minutes > 1) ? @"分" : @"分"];
 	}
 	else if (seconds < 24 * 60 * 60)
 	{
 		int hours = (int) (seconds / (60 * 60));
-		elapsed = [NSString stringWithFormat:@"%d %@", hours, (hours > 1) ? @"hours" : @"hour"];
+		elapsed = [NSString stringWithFormat:@"%d %@", hours, (hours > 1) ? @"小时" : @"小时"];
 	}
 	else
 	{
 		int days = (int) (seconds / (24 * 60 * 60));
-		elapsed = [NSString stringWithFormat:@"%d %@", days, (days > 1) ? @"days" : @"day"];
+		elapsed = [NSString stringWithFormat:@"%d %@", days, (days > 1) ? @"天" : @"天"];
 	}
 	return elapsed;
 }

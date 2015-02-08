@@ -37,7 +37,7 @@
 	if (self)
 	{
 		[self.tabBarItem setImage:[UIImage imageNamed:@"tab_group"]];
-		self.tabBarItem.title = @"Group";
+		self.tabBarItem.title = @"话题";
 	}
 	return self;
 }
@@ -47,9 +47,9 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Group";
+	self.title = @"性爱话题";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"New" style:UIBarButtonItemStylePlain target:self
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"新话题" style:UIBarButtonItemStylePlain target:self
 																			 action:@selector(actionNew)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	self.tableView.tableFooterView = [[UIView alloc] init];
@@ -85,7 +85,7 @@
 			[chatrooms addObjectsFromArray:objects];
 			[self.tableView reloadData];
 		}
-		else [ProgressHUD showError:@"Network error."];
+		else [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 }
 
@@ -95,8 +95,8 @@
 - (void)actionNew
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Please enter a name for your group" message:nil delegate:self
-										  cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入话题摘要" message:nil delegate:self
+										  cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 	[alert show];
 }
@@ -120,7 +120,7 @@
 				{
 					[self loadChatRooms];
 				}
-				else [ProgressHUD showError:@"Network error."];
+				else [ProgressHUD showError:@"网络问题，请重试"];
 			}];
 		}
 	}
@@ -171,9 +171,9 @@
 		{
 			PFObject *chat = [objects firstObject];
 			NSTimeInterval seconds = [[NSDate date] timeIntervalSinceDate:chat.createdAt];
-			cell.detailTextLabel.text = [NSString stringWithFormat:@"%d messages (%@)", (int) [objects count], TimeElapsed(seconds)];
+			cell.detailTextLabel.text = [NSString stringWithFormat:@"%d条讨论 (%@)", (int) [objects count], TimeElapsed(seconds)];
 		}
-		else cell.detailTextLabel.text = @"No message";
+		else cell.detailTextLabel.text = @"无内容";
 	}];
 
 	return cell;
@@ -193,6 +193,7 @@
 	CreateMessageItem([PFUser currentUser], roomId, chatroom[PF_CHATROOMS_NAME]);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	ChatView *chatView = [[ChatView alloc] initWith:roomId];
+    chatView.topic_title = chatroom[PF_CHATROOMS_NAME];
 	chatView.hidesBottomBarWhenPushed = YES;
 	[self.navigationController pushViewController:chatView animated:YES];
 }

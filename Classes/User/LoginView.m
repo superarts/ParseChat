@@ -40,7 +40,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Login";
+	self.title = @"登录";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
@@ -69,16 +69,16 @@
 	NSString *email = [fieldEmail.text lowercaseString];
 	NSString *password = fieldPassword.text;
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	if ([email length] == 0)	{ [ProgressHUD showError:@"Email must be set."]; return; }
-	if ([password length] == 0)	{ [ProgressHUD showError:@"Password must be set."]; return; }
+	if ([email length] == 0)	{ [ProgressHUD showError:@"请输入电子邮件"]; return; }
+	if ([password length] == 0)	{ [ProgressHUD showError:@"请输入密码"]; return; }
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[ProgressHUD show:@"Signing in..." Interaction:NO];
+	[ProgressHUD show:@"正在登录……" Interaction:NO];
 	[PFUser logInWithUsernameInBackground:email password:password block:^(PFUser *user, NSError *error)
 	{
 		if (user != nil)
 		{
 			ParsePushUserAssign();
-			[ProgressHUD showSuccess:[NSString stringWithFormat:@"Welcome back %@!", user[PF_USER_FULLNAME]]];
+			[ProgressHUD showSuccess:[NSString stringWithFormat:@"欢迎回来，%@！", user[PF_USER_FULLNAME]]];
 			[self dismissViewControllerAnimated:YES completion:nil];
 		}
 		else [ProgressHUD showError:error.userInfo[@"error"]];

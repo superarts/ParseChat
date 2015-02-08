@@ -29,7 +29,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Welcome";
+	self.title = @"性爱生活大师";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:nil action:nil];
 	[self.navigationItem setBackBarButtonItem:backButton];
@@ -59,7 +59,7 @@
 - (IBAction)actionFacebook:(id)sender
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	[ProgressHUD show:@"Signing in..." Interaction:NO];
+	[ProgressHUD show:@"正在登录……" Interaction:NO];
 	[PFFacebookUtils logInWithPermissions:@[@"public_profile", @"email", @"user_friends"] block:^(PFUser *user, NSError *error)
 	{
 		if (user != nil)
@@ -146,7 +146,7 @@
 	failure:^(AFHTTPRequestOperation *operation, NSError *error)
 	{
 		[PFUser logOut];
-		[ProgressHUD showError:@"Failed to fetch Facebook profile picture."];
+		[ProgressHUD showError:@"获取Facebook资料失败"];
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[[NSOperationQueue mainQueue] addOperation:operation];
@@ -157,7 +157,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	ParsePushUserAssign();
-	[ProgressHUD showSuccess:[NSString stringWithFormat:@"Welcome back %@!", user[PF_USER_FULLNAME]]];
+	[ProgressHUD showSuccess:[NSString stringWithFormat:@"欢迎回来，%@！", user[PF_USER_FULLNAME]]];
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 

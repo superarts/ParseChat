@@ -44,7 +44,7 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	{
 		[self.tabBarItem setImage:[UIImage imageNamed:@"tab_messages"]];
-		self.tabBarItem.title = @"Messages";
+		self.tabBarItem.title = @"消息";
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionCleanup) name:NOTIFICATION_USER_LOGGED_OUT object:nil];
 	}
@@ -56,7 +56,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Messages";
+	self.title = @"私人消息";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[tableMessages registerNib:[UINib nibWithNibName:@"MessagesCell" bundle:nil] forCellReuseIdentifier:@"MessagesCell"];
 	tableMessages.tableFooterView = [[UIView alloc] init];
@@ -105,7 +105,7 @@
 				[self updateEmptyView];
 				[self updateTabCounter];
 			}
-			else [ProgressHUD showError:@"Network error."];
+			else [ProgressHUD showError:@"网络错误，请重试"];
 			[refreshControl endRefreshing];
 		}];
 	}

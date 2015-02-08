@@ -58,7 +58,7 @@
 	labelElapsed.text = TimeElapsed(seconds);
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	int counter = [message[PF_MESSAGES_COUNTER] intValue];
-	labelCounter.text = (counter == 0) ? @"" : [NSString stringWithFormat:@"%d new", counter];
+	labelCounter.text = (counter == 0) ? @"" : [NSString stringWithFormat:@"%d条", counter];
 }
 
 @end
