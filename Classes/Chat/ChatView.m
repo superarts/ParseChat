@@ -40,13 +40,14 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 
 @implementation ChatView
-
+@synthesize topic_title;
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (id)initWith:(NSString *)roomId_
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	self = [super init];
 	roomId = roomId_;
+    topic_title = nil;
 	return self;
 }
 
@@ -55,7 +56,10 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Chat";
+    if (topic_title)
+        self.title = topic_title;
+    else
+    	self.title = @"话题";
 
 	users = [[NSMutableArray alloc] init];
 	messages = [[NSMutableArray alloc] init];
@@ -127,7 +131,7 @@
 				}
 				self.automaticallyScrollsToMostRecentMessage = YES;
 			}
-			else [ProgressHUD showError:@"Network error."];
+			else [ProgressHUD showError:@"网络错误，请重试"];
 			isLoading = NO;
 		}];
 	}
@@ -178,7 +182,7 @@
 		filePicture = [PFFile fileWithName:@"picture.jpg" data:UIImageJPEGRepresentation(picture, 0.6)];
 		[filePicture saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 		{
-			if (error != nil) [ProgressHUD showError:@"Picture save error."];
+			if (error != nil) [ProgressHUD showError:@"图片保存错误，请重试"];
 		}];
 	}
 	//---------------------------------------------------------------------------------------------------------------------------------------------
@@ -194,7 +198,7 @@
 			[JSQSystemSoundPlayer jsq_playMessageSentSound];
 			[self loadMessages];
 		}
-		else [ProgressHUD showError:@"Network error."];;
+		else [ProgressHUD showError:@"网络错误，请重试"];;
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	SendPushNotification(roomId, text);
@@ -216,8 +220,8 @@
 - (void)didPressAccessoryButton:(UIButton *)sender
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-											   otherButtonTitles:@"Take photo", @"Choose existing photo", nil];
+	UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil
+											   otherButtonTitles:@"拍摄照片", @"从照片中选择", nil];
 	[action showInView:self.view];
 }
 

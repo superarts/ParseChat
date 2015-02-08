@@ -48,7 +48,7 @@
 	if (self)
 	{
 		[self.tabBarItem setImage:[UIImage imageNamed:@"tab_profile"]];
-		self.tabBarItem.title = @"Profile";
+		self.tabBarItem.title = @"设定";
 	}
 	return self;
 }
@@ -58,9 +58,9 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Profile";
+	self.title = @"个人资料";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Log out" style:UIBarButtonItemStylePlain target:self
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"退出登录" style:UIBarButtonItemStylePlain target:self
 																			action:@selector(actionLogout)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
@@ -119,12 +119,12 @@
 		{
 			if (error == nil)
 			{
-				[ProgressHUD showSuccess:@"Saved."];
+				[ProgressHUD showSuccess:@"已保存"];
 			}
-			else [ProgressHUD showError:@"Network error."];
+			else [ProgressHUD showError:@"网络错误，请重试"];
 		}];
 	}
-	else [ProgressHUD showError:@"Name field must be set."];
+	else [ProgressHUD showError:@"请输入新的用户名"];
 }
 
 #pragma mark - User actions
@@ -141,8 +141,8 @@
 - (void)actionLogout
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil
-											   otherButtonTitles:@"Log out", nil];
+	UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil
+											   otherButtonTitles:@"退出登录", nil];
 	[action showFromTabBar:[[self tabBarController] tabBar]];
 }
 
@@ -190,7 +190,7 @@
 	PFFile *filePicture = [PFFile fileWithName:@"picture.jpg" data:UIImageJPEGRepresentation(image, 0.6)];
 	[filePicture saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		if (error != nil) [ProgressHUD showError:@"Network error."];
+		if (error != nil) [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	imageUser.image = image;
@@ -202,7 +202,7 @@
 	PFFile *fileThumbnail = [PFFile fileWithName:@"thumbnail.jpg" data:UIImageJPEGRepresentation(image, 0.6)];
 	[fileThumbnail saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		if (error != nil) [ProgressHUD showError:@"Network error."];
+		if (error != nil) [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -212,7 +212,7 @@
 	user[PF_USER_THUMBNAIL] = fileThumbnail;
 	[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{
-		if (error != nil) [ProgressHUD showError:@"Network error."];
+		if (error != nil) [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[picker dismissViewControllerAnimated:YES completion:nil];

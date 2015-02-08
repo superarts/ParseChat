@@ -14,6 +14,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @interface ChatView : JSQMessagesViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>
 //-------------------------------------------------------------------------------------------------------------------------------------------------
+@property (nonatomic, strong) NSString* topic_title;
 
 - (id)initWith:(NSString *)roomId_;
 

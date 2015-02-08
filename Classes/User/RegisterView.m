@@ -42,7 +42,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Register";
+	self.title = @"注册";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)]];
 }
@@ -72,11 +72,11 @@
 	NSString *password	= fieldPassword.text;
 	NSString *email		= [fieldEmail.text lowercaseString];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	if ([name length] == 0)		{ [ProgressHUD showError:@"Name must be set."]; return; }
-	if ([password length] == 0)	{ [ProgressHUD showError:@"Password must be set."]; return; }
-	if ([email length] == 0)	{ [ProgressHUD showError:@"Email must be set."]; return; }
+	if ([name length] == 0)		{ [ProgressHUD showError:@"请输入用户名"]; return; }
+	if ([password length] == 0)	{ [ProgressHUD showError:@"请输入密码"]; return; }
+	if ([email length] == 0)	{ [ProgressHUD showError:@"请输入邮件地址"]; return; }
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	[ProgressHUD show:@"Please wait..." Interaction:NO];
+	[ProgressHUD show:@"正在注册……" Interaction:NO];
 
 	PFUser *user = [PFUser user];
 	user.username = email;
@@ -90,7 +90,7 @@
 		if (error == nil)
 		{
 			ParsePushUserAssign();
-			[ProgressHUD showSuccess:@"Succeed."];
+			[ProgressHUD showSuccess:@"注册成功"];
 			[self dismissViewControllerAnimated:YES completion:nil];
 		}
 		else [ProgressHUD showError:error.userInfo[@"error"]];

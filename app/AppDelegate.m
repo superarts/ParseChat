@@ -29,6 +29,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 	[Parse setApplicationId:@"sRtJbiHUImOPq2KPHPda0QXqSXsAWokDNBYN4GfL" clientKey:@"iGS37ZA4FzOmeizqRVjMvZXj6RYdBKlm6aODZMNM"];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[PFFacebookUtils initializeFacebook];

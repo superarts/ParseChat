@@ -46,7 +46,7 @@
 	if (self)
 	{
 		[self.tabBarItem setImage:[UIImage imageNamed:@"tab_private"]];
-		self.tabBarItem.title = @"Private";
+		self.tabBarItem.title = @"联系人";
 		//-----------------------------------------------------------------------------------------------------------------------------------------
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(actionCleanup) name:NOTIFICATION_USER_LOGGED_OUT object:nil];
 	}
@@ -58,9 +58,9 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Private";
+	self.title = @"联系人";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Search" style:UIBarButtonItemStylePlain target:self
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self
 																			 action:@selector(actionSearch)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	users1 = [[NSMutableArray alloc] init];
@@ -189,7 +189,7 @@
 			}
 			[self.tableView reloadData];
 		}
-		else [ProgressHUD showError:@"Network error."];
+		else [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 }
 
@@ -238,8 +238,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
-	if ((section == 0) && ([users2 count] != 0)) return @"Registered users";
-	if ((section == 1) && ([users1 count] != 0)) return @"Non-registered users";
+	if ((section == 0) && ([users2 count] != 0)) return @"已注册用户";
+	if ((section == 1) && ([users1 count] != 0)) return @"未注册用户";
 	return nil;
 }
 
@@ -302,8 +302,8 @@
 {
 	if (([user[@"emails"] count] != 0) && ([user[@"phones"] count] != 0))
 	{
-		UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel"
-											  destructiveButtonTitle:nil otherButtonTitles:@"Email invitation", @"SMS invitation", nil];
+		UIActionSheet *action = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消"
+											  destructiveButtonTitle:nil otherButtonTitles:@"发送电子邮件邀请", @"发送短信息邀请（推荐）", nil];
 		[action showInView:self.view];
 	}
 	else if (([user[@"emails"] count] != 0) && ([user[@"phones"] count] == 0))
@@ -314,7 +314,7 @@
 	{
 		[self sendSMS:user];
 	}
-	else [ProgressHUD showError:@"This contact does not have enough information to be invited."];
+	else [ProgressHUD showError:@"此用户没有相关联系方式"];
 }
 
 #pragma mark - UIActionSheetDelegate
@@ -345,7 +345,7 @@
 		mailCompose.mailComposeDelegate = self;
 		[self presentViewController:mailCompose animated:YES completion:nil];
 	}
-	else [ProgressHUD showError:@"Please configure your mail first."];
+	else [ProgressHUD showError:@"请在系统中设置您的电子邮件"];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -356,7 +356,7 @@
 {
 	if (result == MFMailComposeResultSent)
 	{
-		[ProgressHUD showSuccess:@"Mail sent successfully."];
+		[ProgressHUD showSuccess:@"邮件发送成功"];
 	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -375,7 +375,7 @@
 		messageCompose.messageComposeDelegate = self;
 		[self presentViewController:messageCompose animated:YES completion:nil];
 	}
-	else [ProgressHUD showError:@"SMS cannot be sent from this device."];
+	else [ProgressHUD showError:@"本设备无法发送短信息"];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
@@ -386,7 +386,7 @@
 {
 	if (result == MessageComposeResultSent)
 	{
-		[ProgressHUD showSuccess:@"SMS sent successfully."];
+		[ProgressHUD showSuccess:@"短信息发送成功"];
 	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }

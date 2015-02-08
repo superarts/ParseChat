@@ -40,9 +40,9 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"Search";
+	self.title = @"搜索";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
-	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self
+	self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self
 																			action:@selector(actionCancel)];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	self.tableView.tableHeaderView = viewHeader;
@@ -77,7 +77,7 @@
 			[users addObjectsFromArray:objects];
 			[self.tableView reloadData];
 		}
-		else [ProgressHUD showError:@"Network error."];
+		else [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 }
 
@@ -98,7 +98,7 @@
 			[users addObjectsFromArray:objects];
 			[self.tableView reloadData];
 		}
-		else [ProgressHUD showError:@"Network error."];
+		else [ProgressHUD showError:@"网络错误，请重试"];
 	}];
 }
 
