@@ -2,10 +2,10 @@
 
 require('/Users/leo/prj/android/script/lib/lykits.php');
 
-//	download
-/*
 $array = file('list.txt');
 //	print_r($array);
+//	download
+/*
 for ($i = 0; $i < count($array) / 5; $i++)
 {
 	$title	= substr($array[$i * 5 + 0], 0, -1);
@@ -24,7 +24,17 @@ for ($i = 0; $i < count($array) / 5; $i++)
 
 //	parse
 
-$filename = 'post170.html';
+$index = 10000;
+
+$article = array();
+$article['title']	= substr($array[$index * 5 + 0], 0, -1);
+$article['url']		= substr($array[$index * 5 + 1], 0, -1);
+$article['author']	= substr($array[$index * 5 + 2], 0, -1);
+$article['reply']	= substr($array[$index * 5 + 3], 0, -1);
+$article['date']	= substr($array[$index * 5 + 4], 0, -1);
+print_r($article);
+
+$filename = "posts/post$index.html";
 $doc = file_to_doc($filename);
 echo "----\n";
 //print_r(doc_to_array($doc));
@@ -43,6 +53,7 @@ $map['class_id'] = '-@attributes-id';
 //$map['comment_id'] = '-@attributes-data-reply';
 $map['author_url'] = '-div-0-figure-a-0-@attributes-href';
 $map['author_avatar'] = 'div-0-figure-a-0-img-@attributes-src';
+$map['author_name'] = '-div-0-figure-a-1-_value';
 $map['comment_url'] = '-div-0-div-div-a-@attributes-href';
 $map['date'] = '-div-0-div-div-a-_value';
 $path = "root-html-1-body-div-0-div-0-section-div-2-ul-li";
