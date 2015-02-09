@@ -33,8 +33,6 @@
     NSError* error;
     NSString* aid = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"aid.txt"] encoding:NSUTF8StringEncoding error:&error];
     NSString* key = [NSString stringWithContentsOfFile:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"key.txt"] encoding:NSUTF8StringEncoding error:&error];
-    NSLog(@"xx1 '%@'", [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"aid.txt"]);
-    NSLog(@"xx2 '%@'", aid);
 	[Parse setApplicationId:aid clientKey:key];
 	//[Parse setApplicationId:@"sRtJbiHUImOPq2KPHPda0QXqSXsAWokDNBYN4GfL" clientKey:@"iGS37ZA4FzOmeizqRVjMvZXj6RYdBKlm6aODZMNM"];
 

@@ -60,6 +60,8 @@
         self.title = topic_title;
     else
     	self.title = @"话题";
+	self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"举报" style:UIBarButtonItemStylePlain target:self
+																			 action:@selector(actionReport)];
 
 	users = [[NSMutableArray alloc] init];
 	messages = [[NSMutableArray alloc] init];
@@ -79,6 +81,11 @@
 	[self loadMessages];
 
 	ClearMessageCounter(roomId);
+}
+
+- (void)actionReport
+{
+    NSLog(@"report");
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -127,9 +134,9 @@
 				if ([objects count] != 0)
 				{
 					[self finishReceivingMessage];
-					[self scrollToBottomAnimated:NO];
+					//[self scrollToBottomAnimated:NO];
 				}
-				self.automaticallyScrollsToMostRecentMessage = YES;
+				//self.automaticallyScrollsToMostRecentMessage = YES;
 			}
 			else [ProgressHUD showError:@"网络错误，请重试"];
 			isLoading = NO;

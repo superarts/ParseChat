@@ -74,27 +74,23 @@ $map['class_id'] = '-@attributes-id';
 $map['author_url'] = '-div-0-figure-a-0-@attributes-href';
 $map['author_avatar'] = 'div-0-figure-a-0-img-@attributes-src';
 $map['author_name'] = '-div-0-figure-a-1-_value';
-$map['comment_url'] = '-div-0-div-div-a-@attributes-href';
+//$map['comment_url'] = '-div-0-div-div-a-@attributes-href';
+$map['url'] = '-div-0-div-div-a-@attributes-href';
 $map['date'] = '-div-0-div-div-a-_value';
 $path = "root-html-1-body-div-0-div-0-section-div-2-ul-li";
 $item = array_get_path($array, $path);
 //print_array($item);
 $items = array_parse_map($item, $map);
 //print_r($items);
-foreach ($items as $comment)
-{
-	$text = get_comment_text($doc, $comment['class_id']);
-	$html = get_comment_html($doc, $comment['class_id']);
-	echo "----\n$text\n";
-	echo "----\n$html\n";
-	print_r($comment);
-}
 
 parse_save_user($post);
 echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 $object_room = ParseObject::create("ChatRooms");
 $object_room->set("name", $post['title']);
 $object_room->set("user", ParseUser::getCurrentUser());
+$object_room->set("approved", false);
+$hash = hash('ripemd160', $post['title']);
+$object_room->set("hash", $hash);
 $object_room = parse_save_object($object_room);//, 'title');
 //	if ($object_room)
 {
@@ -104,10 +100,39 @@ $object_room = parse_save_object($object_room);//, 'title');
 	$object_chat->set('text', $post_text);
 	$object_chat->set('html', $post_html);
 	$object_chat->set('user', ParseUser::getCurrentUser());
-	$object_chat->set('url',$post['url']);
-	$object_chat->set('date',$post['date']);
-	$object_chat->set('reply_count',$post['reply']);
+	$object_chat->set('url', $post['url']);
+	$object_chat->set('date', $post['date']);
+	$object_chat->set('reply_count', $post['reply']);
+	$object_chat->set('approved', true);
+	$hash = hash('ripemd160', $post_text);
+	echo "post hash: $hash\n";
+	$object_chat->set("hash", $hash);
 	parse_save_object($object_chat);//, 'hash');
+
+	foreach ($items as $comment)
+	{
+		parse_save_user($comment);
+		echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
+
+		$comment_text = get_comment_text($doc, $comment['class_id']);
+		$comment_html = get_comment_html($doc, $comment['class_id']);
+		echo "----\n$comment_text\n";
+		echo "----\n$comment_html\n";
+		print_r($comment);
+
+		$object_comment = ParseObject::create("Chat");
+		$object_comment->set('roomId', $object_room->getObjectId());
+		$object_comment->set('text', $comment_text);
+		$object_comment->set('html', $comment_html);
+		$object_comment->set('user', ParseUser::getCurrentUser());
+		$object_comment->set('url', $comment['url']);
+		$object_comment->set('date', $comment['date']);
+		$object_comment->set('approved', true);
+		$hash = hash('ripemd160', $comment_text);
+		echo "comment hash: $hash\n";
+		$object_comment->set("hash", $hash);
+		parse_save_object($object_comment);//, 'hash');
+	}
 }
 
 /*
@@ -239,6 +264,7 @@ function parse_first_object($object, $key)
 	$class = $object->getClassName();
 
 	$query = new ParseQuery($class);
+	echo "$key: $value\n";
 	$query->equalTo($key, $value);
 	//$query->limit(1);
 	return $query->first();
@@ -251,6 +277,7 @@ function parse_save_object($object, $key = 'hash')
 {
 	$obj = parse_first_object($object, $key);
 	//if (parse_count_object($object, $key) == 0)
+	//print_r($obj);
 	if ($obj == null)
 	{
 		$object->save();
@@ -268,11 +295,14 @@ function parse_save_user($post)
 {
 	$username = $post['author_name'];
 	$hash = hash('ripemd160', $username);
+	$email = "$hash@gmail.com";
 	$password = "contrasenia";
 	$user = new ParseUser();
-	$user->setUsername($username);
-	$user->setEmail("$hash@gmail.com");
-	$user->set('url', $post['url']);
+	$user->setUsername($email);
+	$user->setEmail($email);
+	$user->set('fullname', $username);
+	$user->set('fullname_lower', strtolower($username));
+	$user->set('url', $post['author_url']);
 	$user->set('image_url', $post['author_avatar']);
 	$user->setPassword($password);
 	if (parse_count_object($user, 'username') == 0)
@@ -287,7 +317,7 @@ function parse_save_user($post)
 	else
 	{
 		//echo "found duplicated user\n";
-		ParseUser::logIn($username, $password);
+		ParseUser::logIn($email, $password);
 	}
 }
 
