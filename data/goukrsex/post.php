@@ -95,20 +95,19 @@ echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 $object_room = ParseObject::create("ChatRooms");
 $object_room->set("name", $post['title']);
 $object_room->set("user", ParseUser::getCurrentUser());
-$object_room = parse_save_object($object_room, 'title');
-if ($object_room)
+$object_room = parse_save_object($object_room);//, 'title');
+//	if ($object_room)
 {
 	$object_chat = ParseObject::create("Chat");
-	echo $object_room->getObjectId()."\n";
+	//echo $object_room->getObjectId()."\n";
 	$object_chat->set('roomId', $object_room->getObjectId());
 	$object_chat->set('text', $post_text);
-	//echo $object_chat->get('text');
-	//$object_chat->set('html', $post_html);
+	$object_chat->set('html', $post_html);
 	$object_chat->set('user', ParseUser::getCurrentUser());
 	$object_chat->set('url',$post['url']);
 	$object_chat->set('date',$post['date']);
 	$object_chat->set('reply_count',$post['reply']);
-	$object_chat->save();
+	parse_save_object($object_chat);//, 'hash');
 }
 
 /*
@@ -248,16 +247,18 @@ function parse_first_object($object, $key)
 /**
  * save object only if it's not unique
  */
-function parse_save_object($object, $key)
+function parse_save_object($object, $key = 'hash')
 {
-	if (parse_count_object($object, $key) == 0)
+	$obj = parse_first_object($object, $key);
+	//if (parse_count_object($object, $key) == 0)
+	if ($obj == null)
 	{
 		$object->save();
-		echo "saved: ".$object->getObjectId()."\n";
+		//echo "saved: ".$object->getObjectId()."\n";
 		return $object;
 	}
-	//	else echo "found duplicated object\n";
-	return null;
+		else echo "found duplicated object\n";
+	return $obj;
 }
 
 /**
