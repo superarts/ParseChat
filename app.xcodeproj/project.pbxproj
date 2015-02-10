@@ -120,6 +120,13 @@
 		29EB240E19E9292500D7AA97 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29EB240D19E9292500D7AA97 /* AppDelegate.m */; };
 		29EB241619E9292500D7AA97 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 29EB241519E9292500D7AA97 /* Images.xcassets */; };
 		29EB241919E9292500D7AA97 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 29EB241719E9292500D7AA97 /* LaunchScreen.xib */; };
+		B3604FBF1A8A3B020077A8D4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FBA1A8A3B020077A8D4 /* Default-568h@2x.png */; };
+		B3604FC01A8A3B020077A8D4 /* Default-iPhone6.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FBB1A8A3B020077A8D4 /* Default-iPhone6.png */; };
+		B3604FC11A8A3B020077A8D4 /* Default-iPhone6Plus.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FBC1A8A3B020077A8D4 /* Default-iPhone6Plus.png */; };
+		B3604FC21A8A3B020077A8D4 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FBD1A8A3B020077A8D4 /* Default.png */; };
+		B3604FC31A8A3B020077A8D4 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FBE1A8A3B020077A8D4 /* Default@2x.png */; };
+		B3604FC61A8A3CDD0077A8D4 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FC41A8A3CDD0077A8D4 /* Icon.png */; };
+		B3604FC71A8A3CDD0077A8D4 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B3604FC51A8A3CDD0077A8D4 /* Icon@2x.png */; };
 		B39F66171A877EEA004A7D07 /* key.txt in Resources */ = {isa = PBXBuildFile; fileRef = B39F66151A877EEA004A7D07 /* key.txt */; };
 		B39F661A1A878015004A7D07 /* aid.txt in Resources */ = {isa = PBXBuildFile; fileRef = B39F66191A878015004A7D07 /* aid.txt */; };
 /* End PBXBuildFile section */
@@ -334,6 +341,13 @@
 		29EB241519E9292500D7AA97 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		29EB241819E9292500D7AA97 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		29EB254F19E92ACD00D7AA97 /* AppConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConstant.h; sourceTree = "<group>"; };
+		B3604FBA1A8A3B020077A8D4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		B3604FBB1A8A3B020077A8D4 /* Default-iPhone6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPhone6.png"; sourceTree = "<group>"; };
+		B3604FBC1A8A3B020077A8D4 /* Default-iPhone6Plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-iPhone6Plus.png"; sourceTree = "<group>"; };
+		B3604FBD1A8A3B020077A8D4 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		B3604FBE1A8A3B020077A8D4 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B3604FC41A8A3CDD0077A8D4 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		B3604FC51A8A3CDD0077A8D4 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		B39F66151A877EEA004A7D07 /* key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = key.txt; path = ../../../../Dropbox/prj/SexMaster/key.txt; sourceTree = "<group>"; };
 		B39F66191A878015004A7D07 /* aid.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = aid.txt; path = ../../../../Dropbox/prj/SexMaster/aid.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -793,6 +807,13 @@
 		29EB240819E9292500D7AA97 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B3604FC41A8A3CDD0077A8D4 /* Icon.png */,
+				B3604FC51A8A3CDD0077A8D4 /* Icon@2x.png */,
+				B3604FBA1A8A3B020077A8D4 /* Default-568h@2x.png */,
+				B3604FBB1A8A3B020077A8D4 /* Default-iPhone6.png */,
+				B3604FBC1A8A3B020077A8D4 /* Default-iPhone6Plus.png */,
+				B3604FBD1A8A3B020077A8D4 /* Default.png */,
+				B3604FBE1A8A3B020077A8D4 /* Default@2x.png */,
 				B39F66191A878015004A7D07 /* aid.txt */,
 				B39F66151A877EEA004A7D07 /* key.txt */,
 				29EB240919E9292500D7AA97 /* Info.plist */,
@@ -895,12 +916,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3604FC61A8A3CDD0077A8D4 /* Icon.png in Resources */,
 				29B6DDDC1A3C3D0B00D38CD9 /* tab_profile@2x.png in Resources */,
 				2999F3B31A3C3E9B00147194 /* RegisterView.xib in Resources */,
 				2999F3AF1A3C3E9B00147194 /* ProfileView.xib in Resources */,
+				B3604FC21A8A3B020077A8D4 /* Default.png in Resources */,
+				B3604FC01A8A3B020077A8D4 /* Default-iPhone6.png in Resources */,
 				B39F661A1A878015004A7D07 /* aid.txt in Resources */,
 				292028301A556DA100639C7F /* JSQMessagesAssets.bundle in Resources */,
 				296DD5E81A1F557900AB9F8C /* ProgressHUD.bundle in Resources */,
+				B3604FC71A8A3CDD0077A8D4 /* Icon@2x.png in Resources */,
+				B3604FBF1A8A3B020077A8D4 /* Default-568h@2x.png in Resources */,
 				29B6DDD81A3C3D0B00D38CD9 /* profile_blank@2x.png in Resources */,
 				29B6DDD61A3C3D0B00D38CD9 /* chat_blank@2x.png in Resources */,
 				292028501A556DA100639C7F /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
@@ -910,6 +936,7 @@
 				2920285A1A556DA100639C7F /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
 				B39F66171A877EEA004A7D07 /* key.txt in Resources */,
 				292028581A556DA100639C7F /* JSQMessagesToolbarContentView.xib in Resources */,
+				B3604FC11A8A3B020077A8D4 /* Default-iPhone6Plus.png in Resources */,
 				29EB241919E9292500D7AA97 /* LaunchScreen.xib in Resources */,
 				29B6DDDB1A3C3D0B00D38CD9 /* tab_private@2x.png in Resources */,
 				2999F3AD1A3C3E9B00147194 /* MessagesView.xib in Resources */,
@@ -918,6 +945,7 @@
 				292ED7F91A62FCD3006BCF02 /* SearchView.xib in Resources */,
 				2999F3B11A3C3E9B00147194 /* LoginView.xib in Resources */,
 				2999F3A91A3C3E9B00147194 /* PrivateView.xib in Resources */,
+				B3604FC31A8A3B020077A8D4 /* Default@2x.png in Resources */,
 				2999F3AB1A3C3E9B00147194 /* MessagesCell.xib in Resources */,
 				29B6DDD71A3C3D0B00D38CD9 /* messages_blank@2x.png in Resources */,
 				29EB241619E9292500D7AA97 /* Images.xcassets in Resources */,
@@ -1123,6 +1151,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1130,7 +1159,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = app/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1142,6 +1171,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1149,7 +1179,7 @@
 					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = app/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
