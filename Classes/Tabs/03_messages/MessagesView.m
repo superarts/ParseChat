@@ -56,7 +56,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	[super viewDidLoad];
-	self.title = @"私人消息";
+	self.title = @"消息";
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	[tableMessages registerNib:[UINib nibWithNibName:@"MessagesCell" bundle:nil] forCellReuseIdentifier:@"MessagesCell"];
 	tableMessages.tableFooterView = [[UIView alloc] init];

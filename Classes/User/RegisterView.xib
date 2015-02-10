@@ -85,7 +85,7 @@
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="电子邮件" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V6V-YD-OAr">
                         <rect key="frame" x="15" y="0.0" width="290" height="60"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
-                        <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                         <connections>
                             <outlet property="delegate" destination="-1" id="tZe-gI-9iw"/>
                         </connections>

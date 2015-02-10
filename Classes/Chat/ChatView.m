@@ -118,7 +118,7 @@
 {
 	[super viewDidAppear:animated];
 	self.collectionView.collectionViewLayout.springinessEnabled = YES;
-	timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(loadMessages) userInfo:nil repeats:YES];
+	//timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(loadMessages) userInfo:nil repeats:YES];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -144,14 +144,25 @@
 		[query whereKey:PF_CHAT_ROOMID equalTo:roomId];
 		if (message_last != nil) [query whereKey:PF_CHAT_CREATEDAT greaterThan:message_last.date];
 		[query includeKey:PF_CHAT_USER];
-		[query orderByDescending:PF_CHAT_CREATEDAT];
+		//[query orderByDescending:PF_CHAT_CREATEDAT];
+		[query orderByAscending:PF_CHAT_CREATEDAT];
 		[query setLimit:50];
 		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 		{
 			if (error == nil)
 			{
+                if (objects.count >= 50)
+                {
+                    self.inputToolbar.contentView.textView.placeHolder = @"回帖超过50，已锁";
+                    self.inputToolbar.contentView.textView.userInteractionEnabled = NO;
+                }
+                else
+                {
+                    self.inputToolbar.contentView.textView.placeHolder = NSLocalizedStringFromTable(@"New Message", @"JSQMessages", @"Placeholder text for the message input text view");
+                    self.inputToolbar.contentView.textView.userInteractionEnabled = YES;
+                }
 				self.automaticallyScrollsToMostRecentMessage = NO;
-				for (PFObject *object in [objects reverseObjectEnumerator])
+				for (PFObject *object in objects)   //[objects reverseObjectEnumerator])
 				{
 					[self addMessage:object];
 				}
