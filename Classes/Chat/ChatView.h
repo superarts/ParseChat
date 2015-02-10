@@ -10,9 +10,10 @@
 // THE SOFTWARE.
 
 #import "JSQMessages.h"
+#import <MessageUI/MFMailComposeViewController.h>
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-@interface ChatView : JSQMessagesViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate>
+@interface ChatView : JSQMessagesViewController <UIActionSheetDelegate, UIImagePickerControllerDelegate, MFMailComposeViewControllerDelegate>
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 @property (nonatomic, strong) NSString* topic_title;
 

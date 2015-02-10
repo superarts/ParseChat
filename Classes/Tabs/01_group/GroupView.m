@@ -14,6 +14,7 @@
 
 #import "AppConstant.h"
 #import "messages.h"
+#import "pushnotification.h"
 #import "utilities.h"
 
 #import "GroupView.h"
@@ -57,6 +58,33 @@
 	chatrooms = [[NSMutableArray alloc] init];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //[[NSUserDefaults standardUserDefaults] setBool:false forKey:@"terms-agreed"];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"terms-agreed"] == NO)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"用户协议" message:MESSAGE_TOS delegate:self cancelButtonTitle:@"拒绝" otherButtonTitles:nil];
+        alert.tag = 0;
+        [alert addButtonWithTitle:@"同意"];
+        [alert show];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag != 0)
+        return;
+    NSLog(@"alert: %zi", buttonIndex);
+    if (buttonIndex == 0) {
+		[PFUser logOut];
+		ParsePushUserResign();
+		PostNotification(NOTIFICATION_USER_LOGGED_OUT);
+		LoginUser(self);
+    } else {
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"terms-agreed"];
+    }
+}
+
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 - (void)viewDidAppear:(BOOL)animated
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,6 +105,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	PFQuery *query = [PFQuery queryWithClassName:PF_CHATROOMS_CLASS_NAME];
+    [query orderByDescending:@"updatedAt"];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 	{
 		if (error == nil)
@@ -97,6 +126,7 @@
 {
 	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"请输入话题摘要" message:nil delegate:self
 										  cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.tag = 1;
 	alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 	[alert show];
 }
@@ -107,6 +137,8 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
+    if (alertView.tag != 1)
+        return;
 	if (buttonIndex != alertView.cancelButtonIndex)
 	{
 		UITextField *textField = [alertView textFieldAtIndex:0];

@@ -72,8 +72,10 @@
 	self.senderDisplayName = user[PF_USER_FULLNAME];
 
 	JSQMessagesBubbleImageFactory *bubbleFactory = [[JSQMessagesBubbleImageFactory alloc] init];
-	bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleLightGrayColor]];
-	bubbleImageIncoming = [bubbleFactory incomingMessagesBubbleImageWithColor:[UIColor jsq_messageBubbleGreenColor]];
+    bubbleImageOutgoing = [bubbleFactory outgoingMessagesBubbleImageWithColor://HEXCOLOR(0x8c0095FF)];
+    [UIColor jsq_messageBubbleLightGrayColor]];
+    bubbleImageIncoming = [bubbleFactory incomingMessagesBubbleImageWithColor:HEXCOLOR(0x8c0095FF)];
+    //[UIColor jsq_messageBubbleGreenColor]];
 
 	avatarImageBlank = [JSQMessagesAvatarImageFactory avatarImageWithImage:[UIImage imageNamed:@"chat_blank"] diameter:30.0];
 
@@ -85,7 +87,29 @@
 
 - (void)actionReport
 {
-    NSLog(@"report");
+	if ([MFMailComposeViewController canSendMail])
+	{
+		MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
+		[mailCompose setToRecipients:@[@"lewyorx@gmail.com"]];
+		[mailCompose setSubject:@"举报"];
+        [mailCompose setMessageBody:[NSString stringWithFormat:FORMAT_REPORT, roomId, topic_title] isHTML:NO];
+		mailCompose.mailComposeDelegate = self;
+		[self presentViewController:mailCompose animated:YES completion:nil];
+	}
+	else [ProgressHUD showError:@"请在系统中正确设置您的电子邮件"];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+{
+	if (result == MFMailComposeResultSent)
+	{
+		[ProgressHUD showSuccess:@"邮件发送成功"];
+	}
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

@@ -67,6 +67,7 @@
 	self.tabBarController.selectedIndex = DEFAULT_TAB;
 
 	self.window.rootViewController = self.tabBarController;
+    self.window.tintColor = HEXCOLOR(0x8C0095FF);
 	[self.window makeKeyAndVisible];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	return YES;

@@ -52,17 +52,17 @@ NSString* TimeElapsed(NSTimeInterval seconds)
 	else if (seconds < 60 * 60)
 	{
 		int minutes = (int) (seconds / 60);
-		elapsed = [NSString stringWithFormat:@"%d %@", minutes, (minutes > 1) ? @"分" : @"分"];
+		elapsed = [NSString stringWithFormat:@"%d%@前", minutes, (minutes > 1) ? @"分钟" : @"分钟"];
 	}
 	else if (seconds < 24 * 60 * 60)
 	{
 		int hours = (int) (seconds / (60 * 60));
-		elapsed = [NSString stringWithFormat:@"%d %@", hours, (hours > 1) ? @"小时" : @"小时"];
+		elapsed = [NSString stringWithFormat:@"%d%@前", hours, (hours > 1) ? @"小时" : @"小时"];
 	}
 	else
 	{
 		int days = (int) (seconds / (24 * 60 * 60));
-		elapsed = [NSString stringWithFormat:@"%d %@", days, (days > 1) ? @"天" : @"天"];
+		elapsed = [NSString stringWithFormat:@"%d%@前", days, (days > 1) ? @"天" : @"天"];
 	}
 	return elapsed;
 }
