@@ -173,7 +173,7 @@ echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 
 //echo str_count_duplicate('xxxxx xxxxx xxxxxxxx ', 'x');
 //echo str_remove_duplicate("xxxxx\n\n\nxx xx xxx xxx x xxx", "\n", 1);
-$index = 360;
+$index = 398;
 for ($i = $index; $i <= 16636; $i++)
 {
 	echo "---- PROCESSING $i\n";
@@ -365,7 +365,7 @@ function parse_save_user($post)
 				$success = true;
 			} catch (ParseException $ex) {
 				echo $ex->getMessage()."\n";
-				if ($ex->getMessage() == 'invalid JSON')
+				if (($ex->getMessage() == 'invalid JSON') || (strpos($ex->getMessage(), ' already taken') !== false))
 					$success = true;
 			}
 		} while ($success == false);
