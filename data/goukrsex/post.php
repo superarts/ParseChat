@@ -173,7 +173,7 @@ echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 
 //echo str_count_duplicate('xxxxx xxxxx xxxxxxxx ', 'x');
 //echo str_remove_duplicate("xxxxx\n\n\nxx xx xxx xxx x xxx", "\n", 1);
-$index = 128;
+$index = 360;
 for ($i = $index; $i <= 16636; $i++)
 {
 	echo "---- PROCESSING $i\n";
