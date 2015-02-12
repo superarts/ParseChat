@@ -14,14 +14,14 @@
 //  0: approved only
 //  1: enabled imported data
 //  2: display all
-#define REPORT_THRESHOLD   1
+#define REPORT_THRESHOLD   0
 #define HEXCOLOR(c) [UIColor colorWithRed:((c>>24)&0xFF)/255.0 green:((c>>16)&0xFF)/255.0 blue:((c>>8)&0xFF)/255.0 alpha:((c)&0xFF)/255.0]
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 #define		DEFAULT_TAB							0
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-#define		MESSAGE_INVITE						@"欢迎加入性爱社区参与讨论，传播正确的性知识，成为真正的性爱生活大师！iOS版下载地址："
+#define		MESSAGE_INVITE						@"欢迎加入性爱社区参与讨论，传播正确的性知识，成为真正的性爱生活大师！iOS版下载地址：\nhttps://itunes.apple.com/us/app/xing-ai-sheng-huo-da-shi-for/id388924254?ls=1&mt=8"
 #define		FORMAT_REPORT						@"举报主题：%@\n内容：%@"
 #define     MESSAGE_TOS @"欢迎下载性爱生活大师，并加入我们的社区！为了保证我们的用户拥有一个健康的讨论环境，请遵守以下协议：\n \
 \n \
