@@ -106,6 +106,7 @@
 {
 	PFQuery *query = [PFQuery queryWithClassName:PF_CHATROOMS_CLASS_NAME];
     [query orderByDescending:@"updatedAt"];
+    [query whereKey:@"reported" lessThanOrEqualTo:@(REPORT_THRESHOLD)];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 	{
 		if (error == nil)

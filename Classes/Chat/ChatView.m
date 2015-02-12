@@ -142,6 +142,7 @@
 
 		PFQuery *query = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
 		[query whereKey:PF_CHAT_ROOMID equalTo:roomId];
+        [query whereKey:@"reported" lessThanOrEqualTo:@(REPORT_THRESHOLD)];
 		if (message_last != nil) [query whereKey:PF_CHAT_CREATEDAT greaterThan:message_last.date];
 		[query includeKey:PF_CHAT_USER];
 		//[query orderByDescending:PF_CHAT_CREATEDAT];

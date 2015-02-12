@@ -174,10 +174,11 @@ echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 
 //echo str_count_duplicate('xxxxx xxxxx xxxxxxxx ', 'x');
 //echo str_remove_duplicate("xxxxx\n\n\nxx xx xxx xxx x xxx", "\n", 1);
-$index = 0;
+$index = 12;
 for ($i = $index; $i <= 16636; $i++)
 {
 	echo "---- PROCESSING $i\n";
+	system("echo $i >> log.txt");
 	process_post($i);
 }
 echo "\n----\n";
@@ -358,19 +359,22 @@ function parse_save_user($post)
 	$user->setPassword($password);
 
 	$success = false;
-	do {
+	if (strpos($post['author_avatar'], 'http://') !== false)
+	{
 		echo "picture\n";
-		try {
-			$contents = file_get_contents($post['author_avatar']);
-			$file = ParseFile::createFromData($contents, "myfile.txt");
-			$file->save();
-			$success = true;
-		} catch (Exception $ex) {
-			echo $ex->getMessage()."\n";
-		}
-	} while ($success == false);
-	$user->set("picture", $file);
-	$user->set("thumbnail", $file);
+		do {
+			try {
+				$contents = file_get_contents($post['author_avatar']);
+				$file = ParseFile::createFromData($contents, "myfile.txt");
+				$file->save();
+				$success = true;
+			} catch (Exception $ex) {
+				echo $ex->getMessage()."\n";
+			}
+		} while ($success == false);
+		$user->set("picture", $file);
+		$user->set("thumbnail", $file);
+	}
 
 	if (parse_count_object($user, 'username') == 0)
 	{
