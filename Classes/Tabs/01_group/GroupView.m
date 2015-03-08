@@ -147,6 +147,7 @@
 		{
 			PFObject *object = [PFObject objectWithClassName:PF_CHATROOMS_CLASS_NAME];
 			object[PF_CHATROOMS_NAME] = textField.text;
+            [object setObject:@0 forKey:@"reported"];
 			[object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 			{
 				if (error == nil)
@@ -196,7 +197,7 @@
 
 	PFQuery *query = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
 	[query whereKey:PF_CHAT_ROOMID equalTo:chatroom.objectId];
-	[query orderByDescending:PF_CHAT_CREATEDAT];
+	[query orderByDescending:@"updatedAt"];
 	[query setLimit:1000];
 	[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 	{

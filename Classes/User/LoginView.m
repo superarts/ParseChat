@@ -83,6 +83,12 @@
 		}
 		else [ProgressHUD showError:error.userInfo[@"error"]];
 	}];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"user";
+    object[@"action"] = @"login";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - Table view data source

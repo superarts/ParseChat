@@ -43,6 +43,12 @@
 {
 	RegisterView *registerView = [[RegisterView alloc] init];
 	[self.navigationController pushViewController:registerView animated:YES];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"intro";
+    object[@"action"] = @"register";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -51,6 +57,12 @@
 {
 	LoginView *loginView = [[LoginView alloc] init];
 	[self.navigationController pushViewController:loginView animated:YES];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"intro";
+    object[@"action"] = @"login";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - Facebook login methods
@@ -72,6 +84,12 @@
 		}
 		else [ProgressHUD showError:error.userInfo[@"error"]];
 	}];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"intro";
+    object[@"action"] = @"facebook";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------

@@ -97,6 +97,12 @@
 		[self presentViewController:mailCompose animated:YES completion:nil];
 	}
 	else [ProgressHUD showError:@"请在系统中正确设置您的电子邮件"];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"topic";
+    object[@"action"] = @"report";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -140,18 +146,35 @@
 		isLoading = YES;
 		JSQMessage *message_last = [messages lastObject];
 
-		PFQuery *query = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
-		[query whereKey:PF_CHAT_ROOMID equalTo:roomId];
-        [query whereKey:@"reported" lessThanOrEqualTo:@(REPORT_THRESHOLD)];
-		if (message_last != nil) [query whereKey:PF_CHAT_CREATEDAT greaterThan:message_last.date];
-		[query includeKey:PF_CHAT_USER];
-		//[query orderByDescending:PF_CHAT_CREATEDAT];
-		[query orderByAscending:PF_CHAT_CREATEDAT];
-		[query setLimit:50];
-		[query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
+		PFQuery *query1 = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
+		[query1 whereKey:PF_CHAT_ROOMID equalTo:roomId];
+        [query1 whereKey:@"reported" lessThanOrEqualTo:@(REPORT_THRESHOLD)];
+        //[query1 whereKey:@"reported" containsAllObjectsInArray:@[[NSNull null], @0]];
+		if (message_last != nil) [query1 whereKey:PF_CHAT_CREATEDAT greaterThan:message_last.date];
+		[query1 includeKey:PF_CHAT_USER];
+		//[query1 orderByDescending:PF_CHAT_CREATEDAT];
+		[query1 orderByAscending:PF_CHAT_CREATEDAT];
+		[query1 setLimit:50];
+      
+        /*
+		PFQuery *query2 = [PFQuery queryWithClassName:PF_CHAT_CLASS_NAME];
+        [query2 whereKeyDoesNotExist:@"reported"];
+		if (message_last != nil) [query1 whereKey:PF_CHAT_CREATEDAT greaterThan:message_last.date];
+		[query2 includeKey:PF_CHAT_USER];
+		//[query1 orderByDescending:PF_CHAT_CREATEDAT];
+		[query2 orderByAscending:PF_CHAT_CREATEDAT];
+		[query2 setLimit:50];
+       
+        PFQuery *query = [PFQuery orQueryWithSubqueries:@[query1, query2]];
+        //PFQuery *query = [PFQuery orQueryWithSubqueries:@[query1]];
+        NSLog(@"query started");
+         */
+		[query1 findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error)
 		{
+            //NSLog(@"error: %@", error);
 			if (error == nil)
 			{
+                //NSLog(@"count: %zi", objects.count);
                 if (objects.count >= 50)
                 {
                     self.inputToolbar.contentView.textView.placeHolder = @"回帖超过50，已锁";
@@ -233,6 +256,7 @@
 	object[PF_CHAT_USER] = [PFUser currentUser];
 	object[PF_CHAT_ROOMID] = roomId;
 	object[PF_CHAT_TEXT] = text;
+    object[@"reported"] = @0;
 	if (filePicture != nil) object[PF_CHAT_PICTURE] = filePicture;
 	[object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error)
 	{

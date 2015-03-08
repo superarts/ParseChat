@@ -346,6 +346,12 @@
 		[self presentViewController:mailCompose animated:YES completion:nil];
 	}
 	else [ProgressHUD showError:@"请在系统中设置您的电子邮件"];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"invite";
+    object[@"action"] = @"mail";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - MFMailComposeViewControllerDelegate
@@ -357,6 +363,12 @@
 	if (result == MFMailComposeResultSent)
 	{
 		[ProgressHUD showSuccess:@"邮件发送成功"];
+        
+        PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+        if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+        object[@"module"] = @"invite";
+        object[@"action"] = @"mail-success";
+        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -376,6 +388,12 @@
 		[self presentViewController:messageCompose animated:YES completion:nil];
 	}
 	else [ProgressHUD showError:@"本设备无法发送短信息"];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"invite";
+    object[@"action"] = @"sms";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate
@@ -387,6 +405,12 @@
 	if (result == MessageComposeResultSent)
 	{
 		[ProgressHUD showSuccess:@"短信息发送成功"];
+        
+        PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+        if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+        object[@"module"] = @"invite";
+        object[@"action"] = @"sms-success";
+        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 	}
 	[self dismissViewControllerAnimated:YES completion:nil];
 }

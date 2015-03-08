@@ -167,6 +167,12 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------
 {
 	ShouldStartPhotoLibrary(self, YES);
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"user";
+    object[@"action"] = @"photo";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -175,6 +181,12 @@
 {
 	[self dismissKeyboard];
 	[self saveUser];
+    
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"user";
+    object[@"action"] = @"save";
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
 }
 
 #pragma mark - UIImagePickerControllerDelegate

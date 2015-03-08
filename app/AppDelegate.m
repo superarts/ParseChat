@@ -70,6 +70,21 @@
     self.window.tintColor = HEXCOLOR(0x8C0095FF);
 	[self.window makeKeyAndVisible];
 	//---------------------------------------------------------------------------------------------------------------------------------------------
+   
+    PFObject *object = [PFObject objectWithClassName:@"tracking_action"];
+    if ([PFUser currentUser]) object[@"user"] = [PFUser currentUser];
+    object[@"module"] = @"app";
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"not-first"] == NO)
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"not-first"];
+        object[@"action"] = @"first-launch";
+    }
+    else
+    {
+        object[@"action"] = @"launch";
+    }
+    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {} ];
+    
 	return YES;
 }
 

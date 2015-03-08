@@ -1,5 +1,7 @@
 <?php
 
+$index = 6508;
+
 require('/Users/leo/prj/script/lib/lykits.php');
 
 use Parse\ParseClient;
@@ -174,7 +176,6 @@ echo "current user: ".ParseUser::getCurrentUser()->getUsername()."\n";
 
 //echo str_count_duplicate('xxxxx xxxxx xxxxxxxx ', 'x');
 //echo str_remove_duplicate("xxxxx\n\n\nxx xx xxx xxx x xxx", "\n", 1);
-$index = 12;
 for ($i = $index; $i <= 16636; $i++)
 {
 	echo "---- PROCESSING $i\n";
@@ -368,12 +369,14 @@ function parse_save_user($post)
 				$file = ParseFile::createFromData($contents, "myfile.txt");
 				$file->save();
 				$success = true;
+				$user->set("picture", $file);
+				$user->set("thumbnail", $file);
 			} catch (Exception $ex) {
 				echo $ex->getMessage()."\n";
+				if (strpos($ex->getMessage(), 'Cannot retrieve data for unsaved ParseFile') !== false)
+					$success = true;
 			}
 		} while ($success == false);
-		$user->set("picture", $file);
-		$user->set("thumbnail", $file);
 	}
 
 	if (parse_count_object($user, 'username') == 0)
@@ -386,7 +389,10 @@ function parse_save_user($post)
 				$success = true;
 			} catch (ParseException $ex) {
 				echo $ex->getMessage()."\n";
-				if (($ex->getMessage() == 'invalid JSON') || (strpos($ex->getMessage(), ' already taken') !== false))
+				if (($ex->getMessage() == 'invalid JSON') || 
+					(strpos($ex->getMessage(), 'already taken') !== false) ||
+					(strpos($ex->getMessage(), 'Cannot retrieve data for unsaved ParseFile') !== false)
+				)
 					$success = true;
 			}
 		} while ($success == false);

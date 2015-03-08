@@ -135,7 +135,13 @@
 	if (cell == nil) cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
 
 	PFUser *user = users[indexPath.row];
-	cell.textLabel.text = user[PF_USER_FULLNAME];
+    if (user[PF_USER_FULLNAME] != [NSNull null])
+    	cell.textLabel.text = user[PF_USER_FULLNAME];
+    else
+    {
+    	cell.textLabel.text = @"UNKNOWN";
+        //NSLog(@"user: %@", user);
+    }
 
 	return cell;
 }
